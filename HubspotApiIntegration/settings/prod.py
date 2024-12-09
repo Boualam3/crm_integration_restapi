@@ -1,8 +1,12 @@
-import dj_database_url
+import os
+from .base import *
+# import dj_database_url
+from dotenv import load_dotenv
+load_dotenv()
 
 DEBUG = False
 
-ALLOWED_HOSTS=["","localhost"]
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOST").split(" ")
 
 
 INSTALLED_APPS += ['corsheaders']
@@ -10,6 +14,7 @@ INSTALLED_APPS += ['corsheaders']
 MIDDLEWARE += [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 CORS_ALLOWED_ORIGINS = [
@@ -22,10 +27,22 @@ CORS_ALLOW_HEADERS = [
     'authorization',
 ]
 
-
-
 DATABASES = {
-    'default': dj_database_url.config(
-        default="postgresql://postgres:postgres@localhost:5432/api_db",        conn_max_age=600)
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'crmdb',
+        'USER': 'crmdbuser',
+        'PASSWORD': 'crmdbuserpasskey',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }
 }
 
+# DATABASES = {
+#     "default": dj_database_url.parse(os.environ.get("DATABASE_URL"))
+# }
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+# Enable the WhiteNoise storage backend, which compresses static files to reduce disk use
+# and renames the files with unique names for each version to support long-term caching
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
