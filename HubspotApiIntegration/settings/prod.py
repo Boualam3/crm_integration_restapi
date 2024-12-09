@@ -29,10 +29,8 @@ CORS_ALLOW_HEADERS = [
 
 
 DATABASES = {
-    'default': dj_database_url.config(
-        default="postgresql://postgres:postgres@localhost:5432/api_db",        conn_max_age=600)
+    'default': dj_database_url.parse(os.environ.get('DATABASE_URL'), conn_max_age=600),
 }
-
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # Enable the WhiteNoise storage backend, which compresses static files to reduce disk use
