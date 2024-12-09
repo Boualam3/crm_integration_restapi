@@ -1,7 +1,7 @@
 databases:
   - name: boualam
     plan: free
-    databaseName: APIDB
+    databaseName: api_db
     user: mysite
 
 services:
