@@ -1,9 +1,8 @@
-
 import dj_database_url
 
 DEBUG = False
 
-ALLOWED_HOSTS=["https://restapi-yzh1.onrender.com"]
+ALLOWED_HOSTS=["https://restapi-yzh1.onrender.com","localhost"]
 
 
 INSTALLED_APPS += ['corsheaders']
